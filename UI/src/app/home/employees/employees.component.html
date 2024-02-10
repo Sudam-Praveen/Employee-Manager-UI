@@ -13,17 +13,26 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel name="key" id="searchName" class="form-control mr-sm-2"
-                placeholder="Search employees..." required>
+            <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel name="key"
+                id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required>
         </form>
     </div>
 </nav>
 
 
 <div class="container mt-5" id="main-container">
-    <div class="row equal-height-cards">
 
-        <div style="height: 320px;" class="col-md-6 col-xl-3" *ngFor="let employee of allEmployees">
+    <div class="text-center" *ngIf="!allEmployees">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="row equal-height-cards" *ngIf="allEmployees"  >
+
+
+
+        <div style="height: 320px;"  class="col-md-6 col-xl-3 " data-aos="flip-down" *ngFor="let employee of allEmployees">
             <div class="card m-b-30">
                 <div class="card-body row">
                     <div class="col-6">
@@ -184,7 +193,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to delete <span class="fw-bold">{{selectedEmployee?.name}}</span>  ?</p>
+                <p>Are you sure you want to delete <span class="fw-bold">{{selectedEmployee?.name}}</span> ?</p>
                 <div class="modal-footer">
                     <button (click)="removeEmployee()" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>

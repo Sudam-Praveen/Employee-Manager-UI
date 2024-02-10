@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-employees',
   templateUrl: './employees.component.html',
@@ -27,9 +27,16 @@ export class EmployeesComponent implements OnInit {
   };
 
   public createEmployee() {
+
     this.http.post(`${this.apiServerUrl}/employee/add`, this.employee)
-      .subscribe(data => {
-        // console.log(data);
+      .subscribe( data => {
+     console.log(data);
+        
+     Swal.fire({
+      title: "Added successfully!",
+      html: `The Employee <b style="color: Green;">"${this.employee.name}"</b>  is Added successfully`,
+      icon: "success"
+          });
 
         this.employee = {
           name: null,
@@ -39,10 +46,9 @@ export class EmployeesComponent implements OnInit {
           imageURL: null
         };
         this.loadEmployees();
-      },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        })
+
+        
+      })
   }
   loadEmployees() {
     this.http.get(`${this.apiServerUrl}/employee/all`)
@@ -69,17 +75,28 @@ export class EmployeesComponent implements OnInit {
     this.http.put(`${this.apiServerUrl}/employee/update`, this.selectedEmployee)
       .subscribe(data => {
         console.log(data);
+        Swal.fire({
+          title: "Updated!",
+          html: `The Employee <b style="color: blue;">"${this.selectedEmployee.name}"</b>  is updated`,
+          icon: "success"
+              });
         this.selectedEmployee = null;
         this.loadEmployees();
       })
   }
   public removeEmployee() {
 
-    this.http.delete(`${this.apiServerUrl}/employee/delete/${this.selectedEmployee.id}`)
-      .subscribe(() => {
+    this.http.delete(`${this.apiServerUrl}/employee/delete/${this.selectedEmployee.id}`,{ responseType: 'text' })
+      .subscribe((data) => {
         console.log("Deleted Successfuly");
+
+        Swal.fire({
+          title: "Deleted!",
+          html: `The Employee <b style="color: red;">"${this.selectedEmployee.name}"</b>  is deleted`,
+          icon: "success"
+              });
         this.selectedEmployee = null;
-        this.loadEmployees();
+       this.loadEmployees();
       })
      
   }
