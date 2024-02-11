@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import AOS from 'aos';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router'; // Import Router module
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Note: Change 'styleUrl' to 'styleUrls'
+  styleUrls: ['./login.component.css'] 
 })
 export class LoginComponent {
   private apiServerUrl = 'http://localhost:8080';
@@ -31,8 +31,8 @@ export class LoginComponent {
         (data: any) => {
           console.log(data);
           Swal.fire({
-            title: 'Updated!',
-            html: `The User <b style="color: blue;">Valid User</b> `,
+            title: 'Welcome!',
+            html: `  User `,
             icon: 'success'
           }).then(() => {
             // Navigate to another component upon successful login
@@ -43,7 +43,7 @@ export class LoginComponent {
           console.error('Error user ', error);
           Swal.fire({
             title: 'Error!',
-            html: 'Invalid Login please check the password',
+            html: 'Invalid Login please check the email & password',
             icon: 'error'
           });
         }
